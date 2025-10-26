@@ -2,6 +2,9 @@ import React, { useEffect, useMemo, useState } from 'react'
 import Profile from './components/Profile.jsx'
 import Projects from './components/Projects.jsx'
 import { fetchGitHubProfile, fetchGitHubRepos } from './lib/github.js'
+import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Badge } from '@/components/ui/badge'
+import { Skeleton } from '@/components/ui/skeleton'
 
 const USERNAME = 'shazee-04'
 
@@ -40,20 +43,41 @@ export default function App(){
         {error && (
           <div className="py-10 md:py-16">
             <div className="max-w-5xl mx-auto px-4">
-              <div className="text-red-600">{error}</div>
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
             </div>
           </div>
         )}
         {!profile && !error && (
           <div className="py-10 md:py-16">
-            <div className="max-w-5xl mx-auto px-4"><p className="text-slate-500 dark:text-slate-400">Loading profile...</p></div>
+            <div className="max-w-5xl mx-auto px-4">
+              <div className="flex flex-col md:flex-row items-center gap-6">
+                <Skeleton className="w-28 h-28 rounded-full" />
+                <div className="flex-1 w-full">
+                  <Skeleton className="h-8 w-48 mb-2" />
+                  <Skeleton className="h-4 w-full max-w-prose mb-4" />
+                  <div className="flex gap-2">
+                    <Skeleton className="h-6 w-20" />
+                    <Skeleton className="h-6 w-20" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         )}
         {profile && <Profile profile={profile} />}
 
         {!repos && !error && (
           <div className="py-10 md:py-16">
-            <div className="max-w-5xl mx-auto px-4"><p className="text-slate-500 dark:text-slate-400">Loading projects...</p></div>
+            <div className="max-w-5xl mx-auto px-4">
+              <Skeleton className="h-6 w-32 mb-4" />
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {[1, 2, 3].map(i => (
+                  <Skeleton key={i} className="h-40" />
+                ))}
+              </div>
+            </div>
           </div>
         )}
         {repos && (
@@ -63,7 +87,7 @@ export default function App(){
                 <div className="max-w-5xl mx-auto px-4">
                   <div className="flex flex-wrap gap-2">
                     {topLanguages.map(lang => (
-                      <span key={lang} className="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-sm">{lang}</span>
+                      <Badge key={lang} variant="secondary">{lang}</Badge>
                     ))}
                   </div>
                 </div>
