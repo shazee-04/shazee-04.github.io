@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
-function ProjectCard({repo}){
+function ProjectCard({ repo }) {
   return (
     <a href={repo.html_url} target="_blank" rel="noreferrer">
       <Card className="h-full transition-shadow hover:shadow-md">
@@ -23,9 +23,9 @@ function ProjectCard({repo}){
   )
 }
 
-export default function Projects({repos}){
-  if(!repos) return null
-  if(repos.length === 0) return (
+export default function Projects({ repos }) {
+  if (!repos) return null
+  if (repos.length === 0) return (
     <section className="py-10 md:py-16">
       <div className="max-w-5xl mx-auto px-4">
         <p className="text-muted-foreground">No public repositories found.</p>
@@ -35,7 +35,7 @@ export default function Projects({repos}){
   return (
     <section className="py-10 md:py-16">
       <div className="max-w-5xl mx-auto px-4">
-        <h2 className="text-xl md:text-2xl font-bold mb-4">Projects</h2>
+        <h2 className="text-xl md:text-2xl font-bold mb-4">repositories</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {repos.map(r => <ProjectCard key={r.id} repo={r} />)}
         </div>

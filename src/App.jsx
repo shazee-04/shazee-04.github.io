@@ -8,14 +8,14 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 const USERNAME = 'shazee-04'
 
-export default function App(){
+export default function App() {
   const [profile, setProfile] = useState(null)
   const [repos, setRepos] = useState(null)
   const [error, setError] = useState('')
 
   useEffect(() => {
     (async () => {
-      try{
+      try {
         const [p, r] = await Promise.all([
           fetchGitHubProfile(USERNAME),
           fetchGitHubRepos(USERNAME)
@@ -24,17 +24,17 @@ export default function App(){
         // Filter out portfolio repo itself
         const filtered = r.filter(repo => repo.name.toLowerCase() !== `${USERNAME}.github.io`)
         setRepos(filtered)
-      }catch(e){
+      } catch (e) {
         setError(e.message || 'Failed to load data')
       }
     })()
   }, [])
 
   const topLanguages = useMemo(() => {
-    if(!repos) return []
+    if (!repos) return []
     const counts = {}
-    repos.forEach(r => { if(r.language) counts[r.language] = (counts[r.language]||0)+1 })
-    return Object.entries(counts).sort((a,b)=>b[1]-a[1]).map(x=>x[0]).slice(0,5)
+    repos.forEach(r => { if (r.language) counts[r.language] = (counts[r.language] || 0) + 1 })
+    return Object.entries(counts).sort((a, b) => b[1] - a[1]).map(x => x[0]).slice(0, 5)
   }, [repos])
 
   return (
@@ -49,6 +49,7 @@ export default function App(){
             </div>
           </div>
         )}
+        
         {!profile && !error && (
           <div className="py-10 md:py-16">
             <div className="max-w-5xl mx-auto px-4">
@@ -80,22 +81,8 @@ export default function App(){
             </div>
           </div>
         )}
-        {repos && (
-          <>
-            {topLanguages.length > 0 && (
-              <section className="py-10 md:py-16">
-                <div className="max-w-5xl mx-auto px-4">
-                  <div className="flex flex-wrap gap-2">
-                    {topLanguages.map(lang => (
-                      <Badge key={lang} variant="secondary">{lang}</Badge>
-                    ))}
-                  </div>
-                </div>
-              </section>
-            )}
-            <Projects repos={repos} />
-          </>
-        )}
+
+        {repos && (<Projects repos={repos} />)}
       </main>
     </div>
   )

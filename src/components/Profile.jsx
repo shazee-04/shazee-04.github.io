@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 
-function Stat({label, value}){
+function Stat({ label, value }) {
   return (
     <Card>
       <CardContent className="flex flex-col items-center px-4 py-2">
@@ -14,8 +14,8 @@ function Stat({label, value}){
   )
 }
 
-export default function Profile({profile}){
-  if(!profile) return null
+export default function Profile({ profile }) {
+  if (!profile) return null
   return (
     <section className="py-10 md:py-16">
       <div className="max-w-5xl mx-auto px-4">
@@ -26,7 +26,7 @@ export default function Profile({profile}){
           </Avatar>
           <div className="flex-1">
             <h1 className="text-2xl md:text-3xl font-bold">{profile.name || profile.login}</h1>
-            <p className="mt-2 text-muted-foreground max-w-prose">{profile.bio || 'Developer building useful stuff on GitHub.'}</p>
+            <p className="mt-2 text-muted-foreground max-w-prose">{profile.bio}</p>
             <div className="mt-4 flex flex-wrap gap-2">
               {profile.location && <Badge variant="secondary">{profile.location}</Badge>}
               {profile.blog && <Badge variant="secondary" asChild><a href={profile.blog} target="_blank" rel="noreferrer">Website</a></Badge>}
